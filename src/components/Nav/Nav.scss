@@ -1,0 +1,19 @@
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 50px;
+
+  &__controls {
+    display: flex;
+
+    ul {
+      list-style: none;
+      display: flex;
+
+      li {
+        margin-left: 20px;
+      }
+    }
+  }
+}
