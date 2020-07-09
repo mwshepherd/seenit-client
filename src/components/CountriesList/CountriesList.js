@@ -4,7 +4,8 @@ import './CountriesList.scss';
 
 class CountriesList extends Component {
   render() {
-    return <div className="countries-list">Countries List</div>;
+    console.log(this.props);
+    return <div className="countries-list">All countries panel</div>;
   }
 }
 

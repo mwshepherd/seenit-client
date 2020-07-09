@@ -3,3 +3,14 @@
   width: 20%;
   padding: 50px;
 }
+
+.user-countries {
+  &__country {
+    display: flex;
+    justify-content: space-between;
+
+    &:nth-child(even) {
+      background-color: coral;
+    }
+  }
+}

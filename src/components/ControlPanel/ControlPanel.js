@@ -37,6 +37,13 @@ class ControlPanel extends Component {
     }
   };
 
+  deleteCountry = async (id) => {
+    await fetch(`http://localhost:3000/countries/${id}`, {
+      method: 'DELETE',
+    });
+    this.props.getCountries();
+  };
+
   render() {
     console.log(this.state);
     return (
@@ -45,6 +52,17 @@ class ControlPanel extends Component {
           <form onSubmit={this.handleSubmit}>
             <input type="text" placeholder="Country" onChange={this.handleOnChange} />
           </form>
+        </div>
+        <div className="user-countries">
+          {this.props.countries &&
+            this.props.countries.map((country) => (
+              <div className="user-countries__country">
+                <div className="user-countries__country-name">{country.name}</div>
+                <button className="user-countries__country-delete" onClick={() => this.deleteCountry(country.id)}>
+                  delete
+                </button>
+              </div>
+            ))}
         </div>
       </div>
     );

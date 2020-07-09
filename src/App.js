@@ -10,6 +10,7 @@ class App extends React.Component {
   state = {
     countries: null,
   };
+
   async componentDidMount() {
     await this.getCountries();
     // console.log(this.state);
@@ -27,7 +28,7 @@ class App extends React.Component {
       <>
         <Nav />
         <div className="container">
-          <ControlPanel getCountries={this.getCountries} />
+          <ControlPanel getCountries={this.getCountries} countries={this.state.countries} />
           <Map center={[0, 0]} zoom={2}>
             <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' />
             {this.state.countries &&
