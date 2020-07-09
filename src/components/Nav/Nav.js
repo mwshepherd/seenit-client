@@ -8,8 +8,9 @@ class Nav extends Component {
         <div className="nav__site-title">Seent It</div>
         <div className="nav__controls">
           <ul>
-            <li>Log in</li>
-            <li>Log out</li>
+            <li>
+              <button onClick={this.props.logOut}>Log out</button>
+            </li>
           </ul>
         </div>
       </nav>
