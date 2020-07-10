@@ -68,7 +68,7 @@ class ControlPanel extends Component {
       <div className="control-panel">
         <div className="total-countries">
           <h1>{this.props.countries.length} / 250</h1>
-          <h3>Countries you've seent</h3>
+          <h3>Countries you've visited</h3>
         </div>
         <div className="user-countries">{this.props.countries && this.renderUsersCountries()}</div>
       </div>
