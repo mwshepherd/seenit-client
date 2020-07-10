@@ -10,7 +10,7 @@ class Dashboard extends Component {
   state = {
     user: 'username',
     countries: null,
-    totalCountries: null,
+    totalCountries: [],
   };
 
   async componentDidMount() {
@@ -88,6 +88,7 @@ class Dashboard extends Component {
             createCountry={this.createCountry}
             deleteCountry={this.deleteCountry}
             predictiveCountries={predictiveCountries}
+            totalCountries={this.state.totalCountries}
           />
           <Map center={[0, 0]} zoom={2}>
             <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' />

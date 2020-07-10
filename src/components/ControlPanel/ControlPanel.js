@@ -31,9 +31,25 @@ class ControlPanel extends Component {
     this.setState({ query: null });
   };
 
+  renderUsersCountries = () => {
+    return this.props.countries.map((country) => {
+      let match = this.props.totalCountries.find(({ name }) => name === country.name);
+      console.log(match);
+      return (
+        <div key={country.id} className="user-countries__country">
+          <div className="user-countries__flag">{/* <img src={match.flag} /> */}</div>
+          <div className="user-countries__country-name">{country.name}</div>
+          <button className="user-countries__country-delete" onClick={() => this.props.deleteCountry(country.id)}>
+            delete
+          </button>
+        </div>
+      );
+    });
+  };
+
   render() {
-    console.log(this.state);
-    // console.log(this.props);
+    // console.log(this.state);
+    console.log(this.props);
     return (
       <div className="control-panel">
         <div className="form-container">
@@ -46,15 +62,7 @@ class ControlPanel extends Component {
 
         <div className="user-countries">
           <h3>Countries you've seent</h3>
-          {this.props.countries &&
-            this.props.countries.map((country) => (
-              <div key={country.id} className="user-countries__country">
-                <div className="user-countries__country-name">{country.name}</div>
-                <button className="user-countries__country-delete" onClick={() => this.props.deleteCountry(country.id)}>
-                  delete
-                </button>
-              </div>
-            ))}
+          {this.props.countries && this.renderUsersCountries()}
         </div>
       </div>
     );
