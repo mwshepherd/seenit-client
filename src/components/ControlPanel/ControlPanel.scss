@@ -41,4 +41,10 @@
       background-color: var(--color-highlight);
     }
   }
+
+  &__flag {
+    img {
+      max-width: 50px;
+    }
+  }
 }
