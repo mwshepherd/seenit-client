@@ -1,9 +1,19 @@
 import React, { Component } from 'react';
+
+import Autocomplete from './Autocomplete';
 import './ControlPanel.scss';
 
 class ControlPanel extends Component {
+  constructor() {
+    super();
+    this.match = null;
+  }
   state = {
     query: null,
+  };
+
+  handleStateChange = (e) => {
+    this.setState({ query: e });
   };
 
   handleOnChange = (event) => {
@@ -13,28 +23,51 @@ class ControlPanel extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     event.target.reset();
-    this.props.createCountry(this.state.query);
+
+    const result = this.props.predictiveCountries.find((name) => name === this.state.query);
+
+    console.log(result);
+
+    if (this.state.query === result) {
+      this.props.createCountry(this.state.query);
+    }
+
+    this.setState({ query: null });
+  };
+
+  renderUsersCountries = () => {
+    return this.props.countries.map((country) => {
+      if (this.props.totalCountries.length > 1) {
+        this.match = this.props.totalCountries.find(({ name }) => name === country.name);
+      }
+
+      return (
+        <div key={country.id} className="user-countries__country">
+          {this.match && (
+            <>
+              <div className="user-countries__flag">
+                <img src={this.match.flag} />
+              </div>
+              {/* <div className="population">{this.match.population}</div> */}
+            </>
+          )}
+          <div className="user-countries__country-name">{country.name}</div>
+          <button className="user-countries__country-delete" onClick={() => this.props.deleteCountry(country.id)}>
+            delete
+          </button>
+        </div>
+      );
+    });
   };
 
   render() {
-    console.log(this.state);
+    // console.log(this.state);
+    console.log(this.props);
     return (
       <div className="control-panel">
-        <div className="form-container">
-          <form onSubmit={this.handleSubmit}>
-            <input type="text" placeholder="Country" onChange={this.handleOnChange} />
-          </form>
-        </div>
         <div className="user-countries">
-          {this.props.countries &&
-            this.props.countries.map((country) => (
-              <div key={country.id} className="user-countries__country">
-                <div className="user-countries__country-name">{country.name}</div>
-                <button className="user-countries__country-delete" onClick={() => this.props.deleteCountry(country.id)}>
-                  delete
-                </button>
-              </div>
-            ))}
+          <h3>Countries you've seent</h3>
+          {this.props.countries && this.renderUsersCountries()}
         </div>
       </div>
     );

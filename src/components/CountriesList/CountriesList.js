@@ -2,36 +2,25 @@ import React, { Component } from 'react';
 import './CountriesList.scss';
 
 class CountriesList extends Component {
-  renderCountries = (countries, userCountries) => {
-    console.log(userCountries);
-    // return countries.map((country, index) => {
-    //   // console.log('countries map');
-    //   return userCountries.forEach((userCountry) => {
-    //     // console.log('userCountry forEach');
-    //     // console.log(userCountry.name);
-    //     console.log(country);
-    //     if (country.name == userCountry.name) {
-    //       console.log('country name comparison');
-    //       console.log(country);
-    //       return (
-    //         <div key={index}>
-    //           <h3 onClick={() => this.props.createCountry(country.name)}>{country.name}</h3>
-    //           {/* <p>Native Name: {country.nativeName}</p> */}
-    //           {/* <p>Population: {country.population}</p> */}
-    //           {/* <img src={country.flag} alt="flag lol" /> */}
-    //         </div>
-    //       );
-    //     }
-    //   });
-    // });
+  state = {
+    search: '',
+  };
 
+  handleOnChange = (event) => {
+    this.setState({ search: event.target.value });
+  };
+
+  renderCountries = (countries) => {
     return countries.map((country, index) => {
       return (
-        <div key={index}>
-          <h3 onClick={() => this.props.createCountry(country.name)}>{country.name}</h3>
+        <div key={index} className="country-entry">
+          <div className="country-flag">
+            <img src={country.flag} alt="flag lol" />
+          </div>
+
+          <h4 onClick={() => this.props.createCountry(country.name)}>{country.name}</h4>
           {/* <p>Native Name: {country.nativeName}</p> */}
           {/* <p>Population: {country.population}</p> */}
-          {/* <img src={country.flag} alt="flag lol" /> */}
         </div>
       );
     });
@@ -39,7 +28,20 @@ class CountriesList extends Component {
 
   render() {
     console.log(this.props);
-    return <div className="countries-list">{this.props.countries && this.renderCountries(this.props.countries, this.props.userCountries)}</div>;
+    let filteredCountries = this.props.countries.filter((country) => {
+      return country.name.indexOf(this.state.search) != -1;
+    });
+
+    return (
+      <div className="countries-list">
+        <div className="search">
+          <h3>Search for country</h3>
+          <input type="text" onChange={this.handleOnChange} />
+        </div>
+
+        <div className="countries-list_all">{this.props.countries && this.renderCountries(filteredCountries)}</div>
+      </div>
+    );
   }
 }
 

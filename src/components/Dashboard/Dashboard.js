@@ -8,8 +8,9 @@ import CountriesList from '../CountriesList/CountriesList';
 
 class Dashboard extends Component {
   state = {
+    user: 'username',
     countries: null,
-    totalCountries: null,
+    totalCountries: [],
   };
 
   async componentDidMount() {
@@ -18,9 +19,13 @@ class Dashboard extends Component {
   }
 
   getCountries = async () => {
-    const response = await fetch('http://localhost:3000/countries?type=json');
+    const response = await fetch('http://localhost:3000/countries?type=json', {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
     const data = await response.json();
-    this.setState({ countries: data.data });
+    this.setState({ user: data.user, countries: data.data });
   };
 
   getTotalCountries = async () => {
@@ -41,6 +46,7 @@ class Dashboard extends Component {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
         body: JSON.stringify(body),
       });
@@ -53,6 +59,9 @@ class Dashboard extends Component {
   deleteCountry = async (id) => {
     await fetch(`http://localhost:3000/countries/${id}`, {
       method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
     });
     this.getCountries();
   };
@@ -64,12 +73,23 @@ class Dashboard extends Component {
 
   render() {
     // this.state.countries && console.log(this.state);
-    console.log(this.props);
+
+    console.log(this.state);
+    let predictiveCountries = null;
+    this.state.totalCountries ? (predictiveCountries = this.state.totalCountries.map((country) => country.name)) : (predictiveCountries = null);
+    // console.log(predictiveCountries);
     return (
       <>
-        <Nav logOut={this.logOut} />
-        <div className="container">
-          <ControlPanel getCountries={this.getCountries} countries={this.state.countries} createCountry={this.createCountry} deleteCountry={this.deleteCountry} />
+        <Nav logOut={this.logOut} username={this.state?.user.username} />
+        <div className="dashboard-container">
+          <ControlPanel
+            getCountries={this.getCountries}
+            countries={this.state.countries}
+            createCountry={this.createCountry}
+            deleteCountry={this.deleteCountry}
+            predictiveCountries={predictiveCountries}
+            totalCountries={this.state.totalCountries}
+          />
           <Map center={[0, 0]} zoom={2}>
             <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' />
             {this.state.countries &&
