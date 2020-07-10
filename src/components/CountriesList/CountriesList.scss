@@ -1,5 +1,6 @@
 .countries-list {
-  background-color: #eee;
+  background-color: var(--color-dark);
+  color: var(--color-light);
   width: 20%;
   overflow-y: scroll;
   padding: 20px;

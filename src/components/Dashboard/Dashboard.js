@@ -75,11 +75,20 @@ class Dashboard extends Component {
     // this.state.countries && console.log(this.state);
 
     console.log(this.state);
+    let predictiveCountries = null;
+    this.state.totalCountries ? (predictiveCountries = this.state.totalCountries.map((country) => country.name)) : (predictiveCountries = null);
+    // console.log(predictiveCountries);
     return (
       <>
         <Nav logOut={this.logOut} username={this.state?.user.username} />
-        <div className="container">
-          <ControlPanel getCountries={this.getCountries} countries={this.state.countries} createCountry={this.createCountry} deleteCountry={this.deleteCountry} />
+        <div className="dashboard-container">
+          <ControlPanel
+            getCountries={this.getCountries}
+            countries={this.state.countries}
+            createCountry={this.createCountry}
+            deleteCountry={this.deleteCountry}
+            predictiveCountries={predictiveCountries}
+          />
           <Map center={[0, 0]} zoom={2}>
             <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' />
             {this.state.countries &&

@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
+
+import Autocomplete from './Autocomplete';
 import './ControlPanel.scss';
 
 class ControlPanel extends Component {
   state = {
     query: null,
+  };
+
+  handleStateChange = (e) => {
+    this.setState({ query: e });
   };
 
   handleOnChange = (event) => {
@@ -14,18 +20,24 @@ class ControlPanel extends Component {
     event.preventDefault();
     event.target.reset();
     this.props.createCountry(this.state.query);
+    this.setState({ query: '' });
   };
 
   render() {
     console.log(this.state);
+    // console.log(this.props);
     return (
       <div className="control-panel">
         <div className="form-container">
+          <h3>Search for country</h3>
           <form onSubmit={this.handleSubmit}>
-            <input type="text" placeholder="Country" onChange={this.handleOnChange} />
+            {/* <input type="text" placeholder="Country" onChange={this.handleOnChange} /> */}
+            <Autocomplete suggestions={this.props.predictiveCountries} handleOnChange={this.handleOnChange} handleStateChange={this.handleStateChange} />
           </form>
         </div>
+
         <div className="user-countries">
+          <h3>Countries you've seent</h3>
           {this.props.countries &&
             this.props.countries.map((country) => (
               <div key={country.id} className="user-countries__country">
