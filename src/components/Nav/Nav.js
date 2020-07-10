@@ -10,7 +10,9 @@ class Nav extends Component {
           <ul>
             <li>Hello, {this.props.username}!</li>
             <li>
-              <button onClick={this.props.logOut}>Log out</button>
+              <button className="nav__sign-out" onClick={this.props.logOut}>
+                Log out
+              </button>
             </li>
           </ul>
         </div>

@@ -90,7 +90,7 @@ class Dashboard extends Component {
             predictiveCountries={predictiveCountries}
             totalCountries={this.state.totalCountries}
           />
-          <Map center={[0, 0]} zoom={2}>
+          <Map center={[0, 0]} zoom={2} minZoom={2}>
             <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' />
             {this.state.countries &&
               this.state.countries.map((country) => {
