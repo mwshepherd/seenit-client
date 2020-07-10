@@ -19,8 +19,16 @@ class ControlPanel extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     event.target.reset();
-    this.props.createCountry(this.state.query);
-    this.setState({ query: '' });
+
+    const result = this.props.predictiveCountries.find((name) => name === this.state.query);
+
+    console.log(result);
+
+    if (this.state.query === result) {
+      this.props.createCountry(this.state.query);
+    }
+
+    this.setState({ query: null });
   };
 
   render() {
