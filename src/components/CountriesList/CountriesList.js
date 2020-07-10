@@ -36,8 +36,8 @@ class CountriesList extends Component {
       <>
         <div className="right-panel">
           <div className="countries-list__search">
-            <h3>Search for country</h3>
-            <input type="text" onChange={this.handleOnChange} />
+            {/* <h3>Search country</h3> */}
+            <input type="text" placeholder="Search countries" onChange={this.handleOnChange} />
           </div>
 
           <div className="countries-list">
