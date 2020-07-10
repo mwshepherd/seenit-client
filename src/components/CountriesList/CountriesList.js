@@ -33,14 +33,18 @@ class CountriesList extends Component {
     });
 
     return (
-      <div className="countries-list">
-        <div className="countries-list__search">
-          <h3>Search for country</h3>
-          <input type="text" onChange={this.handleOnChange} />
-        </div>
+      <>
+        <div className="right-panel">
+          <div className="countries-list__search">
+            <h3>Search for country</h3>
+            <input type="text" onChange={this.handleOnChange} />
+          </div>
 
-        <div className="countries-list__all">{this.props.countries && this.renderCountries(filteredCountries)}</div>
-      </div>
+          <div className="countries-list">
+            <div className="countries-list__all">{this.props.countries && this.renderCountries(filteredCountries)}</div>
+          </div>
+        </div>
+      </>
     );
   }
 }
