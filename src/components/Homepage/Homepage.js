@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import '../Homepage/Homepage.scss';
+
 class Homepage extends Component {
   state = { email: '', password: '', errMessage: '' };
 
@@ -42,15 +44,18 @@ class Homepage extends Component {
     const { email, password, errMessage } = this.state;
     return (
       <div className="container">
-        <h1>Login</h1>
-        {errMessage && <span>{errMessage}</span>}
-        <form onSubmit={this.onFormSubmit}>
-          <label htmlFor="email">Email</label>
-          <input type="email" name="email" id="email" value={email} onChange={this.onInputChange} />
-          <label htmlFor="password">Password</label>
-          <input type="password" name="password" id="password" value={password} onChange={this.onInputChange} />
-          <input type="submit" value="Submit" />
-        </form>
+        <div className="sign-in-form">
+          <div className="site-title">Seent·it</div>
+          <h1>Login</h1>
+          {errMessage && <span>{errMessage}</span>}
+          <form onSubmit={this.onFormSubmit}>
+            <label htmlFor="email">Email</label>
+            <input type="email" name="email" id="email" value={email} onChange={this.onInputChange} />
+            <label htmlFor="password">Password</label>
+            <input type="password" name="password" id="password" value={password} onChange={this.onInputChange} />
+            <input type="submit" value="Submit" />
+          </form>
+        </div>
       </div>
     );
   }
