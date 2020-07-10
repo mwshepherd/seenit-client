@@ -27,11 +27,14 @@ class CountriesList extends Component {
 
     return countries.map((country, index) => {
       return (
-        <div key={index}>
+        <div key={index} className="country-entry">
+          <div className="country-flag">
+            <img src={country.flag} alt="flag lol" />
+          </div>
+
           <h3 onClick={() => this.props.createCountry(country.name)}>{country.name}</h3>
           {/* <p>Native Name: {country.nativeName}</p> */}
           {/* <p>Population: {country.population}</p> */}
-          {/* <img src={country.flag} alt="flag lol" /> */}
         </div>
       );
     });
