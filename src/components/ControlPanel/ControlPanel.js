@@ -53,7 +53,7 @@ class ControlPanel extends Component {
           )}
           <div className="user-countries__country-name">{country.name}</div>
           <button className="user-countries__country-delete" onClick={() => this.props.deleteCountry(country.id)}>
-            delete
+            <i class="far fa-times-circle"></i>
           </button>
         </div>
       );
@@ -63,9 +63,11 @@ class ControlPanel extends Component {
   render() {
     // console.log(this.state);
     console.log(this.props);
+    console.log(this.props.countries.length);
     return (
       <div className="control-panel">
         <div className="user-countries">
+          <h1>{this.props.countries.length} / 250</h1>
           <h3>Countries you've seent</h3>
           {this.props.countries && this.renderUsersCountries()}
         </div>

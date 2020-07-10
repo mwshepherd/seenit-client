@@ -9,7 +9,7 @@ import CountriesList from '../CountriesList/CountriesList';
 class Dashboard extends Component {
   state = {
     user: 'username',
-    countries: null,
+    countries: [],
     totalCountries: [],
   };
 
