@@ -13,12 +13,12 @@ class CountriesList extends Component {
   renderCountries = (countries) => {
     return countries.map((country, index) => {
       return (
-        <div key={index} className="country-entry">
+        <div key={index} className="country-entry" onClick={() => this.props.createCountry(country.name)}>
           <div className="country-flag">
             <img src={country.flag} alt="flag lol" />
           </div>
 
-          <h4 onClick={() => this.props.createCountry(country.name)}>{country.name}</h4>
+          <h4>{country.name}</h4>
           {/* <p>Native Name: {country.nativeName}</p> */}
           {/* <p>Population: {country.population}</p> */}
         </div>
@@ -29,7 +29,7 @@ class CountriesList extends Component {
   render() {
     console.log(this.props);
     let filteredCountries = this.props.countries.filter((country) => {
-      return country.name.indexOf(this.state.search) != -1;
+      return country.name.toLowerCase().indexOf(this.state.search.toLowerCase()) != -1;
     });
 
     return (

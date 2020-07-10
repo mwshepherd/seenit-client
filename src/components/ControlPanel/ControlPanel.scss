@@ -3,6 +3,7 @@
   color: var(--color-light);
   width: 25%;
   padding: 10px 2%;
+  overflow-y: scroll;
 }
 
 .form-container {
@@ -28,10 +29,11 @@
 }
 
 .user-countries {
-  margin-top: 50px;
+  // margin-top: 50px;
   &__country {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 10px;
     border: 1px solid;
     border-radius: 5px;
@@ -46,5 +48,19 @@
     img {
       max-width: 50px;
     }
+  }
+
+  &__country-name {
+    font-size: 10px;
+    font-weight: bold;
+    width: 100%;
+    margin: 0 10px;
+  }
+
+  &__country-delete {
+    background: none;
+    border: 0;
+    color: var(--color-light);
+    cursor: pointer;
   }
 }
