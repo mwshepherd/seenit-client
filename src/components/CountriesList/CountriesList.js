@@ -34,12 +34,12 @@ class CountriesList extends Component {
 
     return (
       <div className="countries-list">
-        <div className="search">
+        <div className="countries-list__search">
           <h3>Search for country</h3>
           <input type="text" onChange={this.handleOnChange} />
         </div>
 
-        <div className="countries-list_all">{this.props.countries && this.renderCountries(filteredCountries)}</div>
+        <div className="countries-list__all">{this.props.countries && this.renderCountries(filteredCountries)}</div>
       </div>
     );
   }

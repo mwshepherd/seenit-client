@@ -5,6 +5,15 @@
   overflow-y: scroll;
   padding: 20px;
 
+  &__search {
+    position: fixed;
+    background: var(--color-dark);
+  }
+
+  &__all {
+    margin-top: 100px;
+  }
+
   .country-entry {
     // background: blue;
     margin: 5px 0;
