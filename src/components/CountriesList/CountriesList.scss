@@ -1,7 +1,7 @@
 .countries-list {
   background-color: var(--color-dark);
   color: var(--color-light);
-  width: 30%;
+  width: 25%;
   overflow-y: scroll;
   padding: 20px;
 
@@ -10,9 +10,9 @@
     margin: 5px 0;
     display: flex;
     align-items: center;
-    padding: 10px;
+    padding: 8px;
     border-radius: 5px;
-    height: 40px;
+    height: 30px;
 
     cursor: pointer;
 
@@ -23,12 +23,13 @@
     .country-flag {
       margin-right: 20px;
       img {
-        max-width: 50px;
+        max-width: 40px;
       }
     }
 
     h3 {
       margin: 0;
+      font-size: 16px;
     }
   }
 }

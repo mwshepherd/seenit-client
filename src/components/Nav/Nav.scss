@@ -6,6 +6,11 @@
   background: var(--color-highlight);
   color: var(--color-light);
 
+  &__site-title {
+    font-size: 30px;
+    font-weight: bold;
+  }
+
   &__controls {
     display: flex;
 
