@@ -1,7 +1,7 @@
 .control-panel {
   background-color: var(--color-dark);
   color: var(--color-light);
-  width: 20%;
+  width: 15%;
   // padding: 10px 2%;
   // overflow-y: scroll;
   overflow: hidden;
@@ -63,7 +63,7 @@
 .user-countries {
   // margin-top: 50px;
   overflow-y: scroll;
-  height: calc(100% - 150px);
+  height: calc(100% - 220px);
   padding: 0 20px;
 
   &__country {
@@ -74,6 +74,7 @@
     border: 1px solid #666;
     border-radius: 5px;
     margin: 10px 0;
+    height: 55px;
 
     // &:nth-child(even) {
     //   background-color: var(--color-highlight);
