@@ -75,12 +75,11 @@ class Dashboard extends Component {
 
   matchActiveCountry = (activeCountry) => {
     const match = this.state.totalCountries.find(({ name }) => name === activeCountry.name);
-    console.log(match);
-    this.setState({ activeCountry: match });
+    this.setState({ activeCountry: match, activeCountryLatLng: activeCountry.coords });
   };
 
   render() {
-    const { activeCountry } = this.state;
+    const { activeCountry, activeCountryLatLng } = this.state;
     return (
       <>
         <Nav logOut={this.logOut} username={this.state?.user.username} />
@@ -94,21 +93,32 @@ class Dashboard extends Component {
           />
           <Map center={[0, 0]} zoom={2} minZoom={2}>
             <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' />
+
             {this.state.countries &&
               this.state.countries.map((country) => {
                 return <Marker key={country.id} position={[country.coords[0], country.coords[1]]} onClick={() => this.matchActiveCountry(country)} />;
               })}
 
             {activeCountry && (
-              <Popup position={[activeCountry.latlng[0], activeCountry.latlng[1]]} onClose={() => this.setState({ activeCountry: null })}>
+              <Popup position={[activeCountryLatLng[0], activeCountryLatLng[1]]} onClose={() => this.setState({ activeCountry: null })}>
                 <div>
                   <img src={activeCountry.flag} style={{ maxWidth: '100px' }} />
                   <h2>{activeCountry.name}</h2>
-                  <div className="native-name">Native name: {activeCountry.nativeName}</div>
-                  <div className="region">Region: {activeCountry.region}</div>
-                  <div className="population">Population: {activeCountry.population.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</div>
-                  <div className="language">Language: {activeCountry.languages[0].name}</div>
-                  <div className="capital">Capital: {activeCountry.capital}</div>
+                  <div className="native-name">
+                    <b>Native name:</b> {activeCountry.nativeName}
+                  </div>
+                  <div className="region">
+                    <b>Region:</b> {activeCountry.region}
+                  </div>
+                  <div className="population">
+                    <b>Population:</b> {activeCountry.population.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                  </div>
+                  <div className="language">
+                    <b>Language:</b> {activeCountry.languages[0].name}
+                  </div>
+                  <div className="capital">
+                    <b>Capital:</b> {activeCountry.capital}
+                  </div>
                 </div>
               </Popup>
             )}
