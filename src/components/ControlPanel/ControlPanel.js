@@ -9,7 +9,8 @@ class ControlPanel extends Component {
     this.match = null;
   }
   state = {
-    query: null,
+    query: '',
+    search: '',
   };
 
   handleStateChange = (e) => {
@@ -20,13 +21,15 @@ class ControlPanel extends Component {
     this.setState({ query: event.target.value });
   };
 
+  handleSearch = (event) => {
+    this.setState({ search: event.target.value });
+  };
+
   handleSubmit = (event) => {
     event.preventDefault();
     event.target.reset();
 
     const result = this.props.predictiveCountries.find((name) => name === this.state.query);
-
-    console.log(result);
 
     if (this.state.query === result) {
       this.props.createCountry(this.state.query);
@@ -35,10 +38,10 @@ class ControlPanel extends Component {
     this.setState({ query: null });
   };
 
-  renderUsersCountries = () => {
-    return this.props.countries.map((country) => {
-      if (this.props.totalCountries.length > 1) {
-        this.match = this.props.totalCountries.find(({ name }) => name === country.name);
+  renderUsersCountries = (countries, totalCountries) => {
+    return countries.map((country) => {
+      if (totalCountries.length > 1) {
+        this.match = totalCountries.find(({ name }) => name === country.name);
       }
 
       return (
@@ -53,7 +56,7 @@ class ControlPanel extends Component {
           )}
           <div className="user-countries__country-name">{country.name}</div>
           <button className="user-countries__country-delete" onClick={() => this.props.deleteCountry(country.id)}>
-            <i class="far fa-times-circle"></i>
+            <i className="far fa-times-circle"></i>
           </button>
         </div>
       );
@@ -61,16 +64,22 @@ class ControlPanel extends Component {
   };
 
   render() {
-    // console.log(this.state);
-    console.log(this.props);
-    console.log(this.props.countries.length);
+    let filteredCountries = this.props.countries
+      .sort((a, b) => b.id - a.id)
+      .filter((country) => {
+        return country.name.toLowerCase().indexOf(this.state.search.toLowerCase()) != -1;
+      });
+
     return (
       <div className="control-panel">
         <div className="total-countries">
           <h1>{this.props.countries.length} / 250</h1>
           <h3>Countries you've visited</h3>
         </div>
-        <div className="user-countries">{this.props.countries && this.renderUsersCountries()}</div>
+        <div className="search">
+          <input type="text" placeholder="Search your saved list" onChange={this.handleSearch} />
+        </div>
+        <div className="user-countries">{this.props.countries && this.renderUsersCountries(filteredCountries, this.props.totalCountries)}</div>
       </div>
     );
   }

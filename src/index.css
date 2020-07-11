@@ -8,6 +8,7 @@
   --color-dark: #333333;
   --color-light: #e6e6e6;
   --color-highlight: #1d1e1f;
+  --color-selected: #78b156;
 }
 
 body {
@@ -32,7 +33,7 @@ code {
 }
 
 .leaflet-container {
-  width: 65%;
+  width: 70%;
   height: 100%;
 }
 

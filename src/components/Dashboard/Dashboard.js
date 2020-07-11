@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
 import { icon } from 'leaflet';
+import { backendServer } from '../../shared/constants';
 
 import Nav from '../Nav/Nav';
 import ControlPanel from '../ControlPanel/ControlPanel';
@@ -11,6 +12,7 @@ class Dashboard extends Component {
     user: 'username',
     countries: [],
     totalCountries: [],
+    activeCountry: null,
   };
 
   async componentDidMount() {
@@ -19,7 +21,7 @@ class Dashboard extends Component {
   }
 
   getCountries = async () => {
-    const response = await fetch('http://localhost:3000/countries?type=json', {
+    const response = await fetch(`${backendServer}/countries?type=json`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
@@ -35,29 +37,35 @@ class Dashboard extends Component {
   };
 
   createCountry = async (query) => {
-    const body = {
-      country: {
-        name: query,
-      },
-    };
+    const match = this.state.countries.find(({ name }) => name === query);
 
-    try {
-      await fetch('http://localhost:3000/countries', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+    if (match === undefined) {
+      const body = {
+        country: {
+          name: query,
         },
-        body: JSON.stringify(body),
-      });
-      this.getCountries();
-    } catch (err) {
-      console.log(err);
+      };
+
+      try {
+        await fetch(`${backendServer}/countries`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+          body: JSON.stringify(body),
+        });
+        this.getCountries();
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      console.log('You already have this in your list');
     }
   };
 
   deleteCountry = async (id) => {
-    await fetch(`http://localhost:3000/countries/${id}`, {
+    await fetch(`${backendServer}/countries/${id}`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -71,13 +79,13 @@ class Dashboard extends Component {
     this.props.history.push('/');
   };
 
-  render() {
-    // this.state.countries && console.log(this.state);
+  matchActiveCountry = (activeCountry) => {
+    const match = this.state.totalCountries.find(({ name }) => name === activeCountry.name);
+    this.setState({ activeCountry: match, activeCountryLatLng: activeCountry.coords });
+  };
 
-    console.log(this.state);
-    let predictiveCountries = null;
-    this.state.totalCountries ? (predictiveCountries = this.state.totalCountries.map((country) => country.name)) : (predictiveCountries = null);
-    // console.log(predictiveCountries);
+  render() {
+    const { activeCountry, activeCountryLatLng } = this.state;
     return (
       <>
         <Nav logOut={this.logOut} username={this.state?.user.username} />
@@ -87,15 +95,39 @@ class Dashboard extends Component {
             countries={this.state.countries}
             createCountry={this.createCountry}
             deleteCountry={this.deleteCountry}
-            predictiveCountries={predictiveCountries}
             totalCountries={this.state.totalCountries}
           />
           <Map center={[0, 0]} zoom={2} minZoom={2}>
             <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' />
+
             {this.state.countries &&
               this.state.countries.map((country) => {
-                return <Marker key={country.id} position={[country.coords[0], country.coords[1]]} />;
+                return <Marker key={country.id} position={[country.coords[0], country.coords[1]]} onClick={() => this.matchActiveCountry(country)} />;
               })}
+
+            {activeCountry && (
+              <Popup position={[activeCountryLatLng[0], activeCountryLatLng[1]]} onClose={() => this.setState({ activeCountry: null })}>
+                <div>
+                  <img src={activeCountry.flag} style={{ maxWidth: '100px' }} />
+                  <h2>{activeCountry.name}</h2>
+                  <div className="native-name">
+                    <b>Native name:</b> {activeCountry.nativeName}
+                  </div>
+                  <div className="region">
+                    <b>Region:</b> {activeCountry.region}
+                  </div>
+                  <div className="population">
+                    <b>Population:</b> {activeCountry.population.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                  </div>
+                  <div className="language">
+                    <b>Language:</b> {activeCountry.languages[0].name}
+                  </div>
+                  <div className="capital">
+                    <b>Capital:</b> {activeCountry.capital}
+                  </div>
+                </div>
+              </Popup>
+            )}
           </Map>
           <CountriesList countries={this.state.totalCountries} userCountries={this.state.countries} createCountry={this.createCountry} />
         </div>
