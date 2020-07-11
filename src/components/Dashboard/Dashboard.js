@@ -80,13 +80,6 @@ class Dashboard extends Component {
   };
 
   render() {
-    // this.state.countries && console.log(this.state);
-
-    console.log(this.state);
-    let predictiveCountries = null;
-    this.state.totalCountries ? (predictiveCountries = this.state.totalCountries.map((country) => country.name)) : (predictiveCountries = null);
-    // console.log(predictiveCountries);
-
     const { activeCountry } = this.state;
     return (
       <>
@@ -97,7 +90,6 @@ class Dashboard extends Component {
             countries={this.state.countries}
             createCountry={this.createCountry}
             deleteCountry={this.deleteCountry}
-            predictiveCountries={predictiveCountries}
             totalCountries={this.state.totalCountries}
           />
           <Map center={[0, 0]} zoom={2} minZoom={2}>
@@ -112,8 +104,11 @@ class Dashboard extends Component {
                 <div>
                   <img src={activeCountry.flag} style={{ maxWidth: '100px' }} />
                   <h2>{activeCountry.name}</h2>
+                  <div className="native-name">Native name: {activeCountry.nativeName}</div>
                   <div className="region">Region: {activeCountry.region}</div>
-                  <div className="population">Population: {activeCountry.region}</div>
+                  <div className="population">Population: {activeCountry.population.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</div>
+                  <div className="language">Language: {activeCountry.languages[0].name}</div>
+                  <div className="capital">Capital: {activeCountry.capital}</div>
                 </div>
               </Popup>
             )}

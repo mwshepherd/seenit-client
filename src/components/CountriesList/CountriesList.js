@@ -27,7 +27,6 @@ class CountriesList extends Component {
   };
 
   render() {
-    console.log(this.props);
     let filteredCountries = this.props.countries.filter((country) => {
       return country.name.toLowerCase().indexOf(this.state.search.toLowerCase()) != -1;
     });

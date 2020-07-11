@@ -78,12 +78,11 @@ class Homepage extends Component {
   };
 
   render() {
-    console.log(this.state);
     const { username, email, password, errMessage } = this.state;
     return (
       <div className="container">
         <div className="sign-in-form">
-          <div className="site-title">Seent·it</div>
+          <div className="site-title">Seen·It·</div>
           <div className="user-auth-btns">
             <h1 onClick={this.showLogIn} className={this.state.login ? 'active' : null}>
               Login

@@ -36,6 +36,7 @@ class ControlPanel extends Component {
   };
 
   renderUsersCountries = () => {
+    this.props.countries.sort((a, b) => b.id - a.id);
     return this.props.countries.map((country) => {
       if (this.props.totalCountries.length > 1) {
         this.match = this.props.totalCountries.find(({ name }) => name === country.name);
@@ -53,7 +54,7 @@ class ControlPanel extends Component {
           )}
           <div className="user-countries__country-name">{country.name}</div>
           <button className="user-countries__country-delete" onClick={() => this.props.deleteCountry(country.id)}>
-            <i class="far fa-times-circle"></i>
+            <i className="far fa-times-circle"></i>
           </button>
         </div>
       );
@@ -61,9 +62,6 @@ class ControlPanel extends Component {
   };
 
   render() {
-    // console.log(this.state);
-    console.log(this.props);
-    console.log(this.props.countries.length);
     return (
       <div className="control-panel">
         <div className="total-countries">
