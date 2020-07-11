@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import '../Homepage/Homepage.scss';
 
 class Homepage extends Component {
