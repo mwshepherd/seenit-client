@@ -27,7 +27,7 @@ code {
   background-position: center;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: baseline;
   height: calc(100vh);
 }
 
