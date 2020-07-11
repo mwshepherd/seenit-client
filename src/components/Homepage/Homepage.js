@@ -97,22 +97,17 @@ class Homepage extends Component {
 
           {this.state.login && (
             <form onSubmit={this.onFormSubmit}>
-              <label htmlFor="email">Email</label>
-              <input type="email" name="email" id="email" value={email} onChange={this.onInputChange} />
-              <label htmlFor="password">Password</label>
-              <input type="password" name="password" id="password" value={password} onChange={this.onInputChange} />
+              <input type="email" name="email" id="email" value={email} placeholder="Email" onChange={this.onInputChange} />
+              <input type="password" name="password" id="password" value={password} placeholder="Password" onChange={this.onInputChange} />
               <input type="submit" value="Login" />
             </form>
           )}
 
           {!this.state.login && (
             <form onSubmit={this.handleUserSignUp}>
-              <label htmlFor="email">Username</label>
-              <input type="text" name="username" id="username" value={username} onChange={this.onInputChange} />
-              <label htmlFor="email">Email</label>
-              <input type="email" name="email" id="email" value={email} onChange={this.onInputChange} />
-              <label htmlFor="password">Password</label>
-              <input type="password" name="password" id="password" value={password} onChange={this.onInputChange} />
+              <input type="text" name="username" id="username" value={username} placeholder="Username" onChange={this.onInputChange} />
+              <input type="email" name="email" id="email" value={email} placeholder="Email" onChange={this.onInputChange} />
+              <input type="password" name="password" id="password" value={password} placeholder="Password" onChange={this.onInputChange} />
               <input type="submit" value="Signup" />
             </form>
           )}
