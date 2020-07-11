@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
+import { backendServer } from '../shared/constants';
 
 class ProtectedRoute extends React.Component {
   state = {
@@ -9,7 +10,7 @@ class ProtectedRoute extends React.Component {
 
   async componentDidMount() {
     try {
-      const response = await fetch('http://localhost:3000/status', {
+      const response = await fetch(`${backendServer}/status`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },

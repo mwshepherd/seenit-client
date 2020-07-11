@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../Homepage/Homepage.scss';
+import { backendServer } from '../../shared/constants';
 
 class Homepage extends Component {
   state = { username: '', email: '', password: '', errMessage: '', login: true };
@@ -29,7 +30,7 @@ class Homepage extends Component {
     console.log(body);
 
     try {
-      const response = await fetch('http://localhost:3000/sign-up', {
+      const response = await fetch(`${backendServer}/sign-up`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -55,7 +56,7 @@ class Homepage extends Component {
       auth: { email, password },
     };
     try {
-      const response = await fetch('http://localhost:3000/login', {
+      const response = await fetch(`${backendServer}/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

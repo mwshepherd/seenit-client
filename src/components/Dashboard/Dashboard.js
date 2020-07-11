@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
 import { icon } from 'leaflet';
+import { backendServer } from '../../shared/constants';
 
 import Nav from '../Nav/Nav';
 import ControlPanel from '../ControlPanel/ControlPanel';
@@ -19,7 +20,7 @@ class Dashboard extends Component {
   }
 
   getCountries = async () => {
-    const response = await fetch('http://localhost:3000/countries?type=json', {
+    const response = await fetch(`${backendServer}/countries?type=json`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
@@ -42,7 +43,7 @@ class Dashboard extends Component {
     };
 
     try {
-      await fetch('http://localhost:3000/countries', {
+      await fetch(`${backendServer}/countries`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -57,7 +58,7 @@ class Dashboard extends Component {
   };
 
   deleteCountry = async (id) => {
-    await fetch(`http://localhost:3000/countries/${id}`, {
+    await fetch(`${backendServer}/countries/${id}`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
