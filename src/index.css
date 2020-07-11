@@ -7,7 +7,7 @@
 :root {
   --color-dark: #333333;
   --color-light: #e6e6e6;
-  --color-highlight: #415d66;
+  --color-highlight: #1d1e1f;
 }
 
 body {
@@ -27,17 +27,17 @@ code {
   background-position: center;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: baseline;
   height: calc(100vh);
 }
 
 .leaflet-container {
-  width: 100%;
+  width: 65%;
   height: 100%;
 }
 
 .dashboard-container {
   display: flex;
 
-  height: calc(100vh - 50px);
+  height: calc(100vh - 70px);
 }

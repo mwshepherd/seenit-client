@@ -1,9 +1,10 @@
 .control-panel {
   background-color: var(--color-dark);
   color: var(--color-light);
-  width: 25%;
-  padding: 10px 2%;
-  overflow-y: scroll;
+  width: 20%;
+  // padding: 10px 2%;
+  // overflow-y: scroll;
+  overflow: hidden;
 }
 
 .form-container {
@@ -28,30 +29,46 @@
   }
 }
 
+.total-countries {
+  padding: 20px;
+
+  h1 {
+    font-size: 60px;
+  }
+  h1,
+  h3 {
+    text-align: center;
+  }
+}
+
 .user-countries {
   // margin-top: 50px;
+  overflow-y: scroll;
+  height: calc(100% - 150px);
+  padding: 0 20px;
+
   &__country {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px;
-    border: 1px solid;
+    border: 1px solid #666;
     border-radius: 5px;
     margin: 10px 0;
 
-    &:nth-child(even) {
-      background-color: var(--color-highlight);
-    }
+    // &:nth-child(even) {
+    //   background-color: var(--color-highlight);
+    // }
   }
 
   &__flag {
     img {
-      max-width: 50px;
+      max-width: 40px;
     }
   }
 
   &__country-name {
-    font-size: 10px;
+    font-size: 12px;
     font-weight: bold;
     width: 100%;
     margin: 0 10px;
