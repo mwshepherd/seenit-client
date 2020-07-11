@@ -12,6 +12,7 @@ class Dashboard extends Component {
     user: 'username',
     countries: [],
     totalCountries: [],
+    activeCountry: null,
   };
 
   async componentDidMount() {
@@ -72,6 +73,12 @@ class Dashboard extends Component {
     this.props.history.push('/');
   };
 
+  matchActiveCountry = (activeCountry) => {
+    const match = this.state.totalCountries.find(({ name }) => name === activeCountry.name);
+    console.log(match);
+    this.setState({ activeCountry: match });
+  };
+
   render() {
     // this.state.countries && console.log(this.state);
 
@@ -79,6 +86,8 @@ class Dashboard extends Component {
     let predictiveCountries = null;
     this.state.totalCountries ? (predictiveCountries = this.state.totalCountries.map((country) => country.name)) : (predictiveCountries = null);
     // console.log(predictiveCountries);
+
+    const { activeCountry } = this.state;
     return (
       <>
         <Nav logOut={this.logOut} username={this.state?.user.username} />
@@ -95,8 +104,19 @@ class Dashboard extends Component {
             <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' />
             {this.state.countries &&
               this.state.countries.map((country) => {
-                return <Marker key={country.id} position={[country.coords[0], country.coords[1]]} />;
+                return <Marker key={country.id} position={[country.coords[0], country.coords[1]]} onClick={() => this.matchActiveCountry(country)} />;
               })}
+
+            {activeCountry && (
+              <Popup position={[activeCountry.latlng[0], activeCountry.latlng[1]]} onClose={() => this.setState({ activeCountry: null })}>
+                <div>
+                  <img src={activeCountry.flag} style={{ maxWidth: '100px' }} />
+                  <h2>{activeCountry.name}</h2>
+                  <div className="region">Region: {activeCountry.region}</div>
+                  <div className="population">Population: {activeCountry.region}</div>
+                </div>
+              </Popup>
+            )}
           </Map>
           <CountriesList countries={this.state.totalCountries} userCountries={this.state.countries} createCountry={this.createCountry} />
         </div>
