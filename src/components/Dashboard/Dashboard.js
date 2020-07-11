@@ -37,24 +37,30 @@ class Dashboard extends Component {
   };
 
   createCountry = async (query) => {
-    const body = {
-      country: {
-        name: query,
-      },
-    };
+    const match = this.state.countries.find(({ name }) => name === query);
 
-    try {
-      await fetch(`${backendServer}/countries`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+    if (match === undefined) {
+      const body = {
+        country: {
+          name: query,
         },
-        body: JSON.stringify(body),
-      });
-      this.getCountries();
-    } catch (err) {
-      console.log(err);
+      };
+
+      try {
+        await fetch(`${backendServer}/countries`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+          body: JSON.stringify(body),
+        });
+        this.getCountries();
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      console.log('You already have this in your list');
     }
   };
 
