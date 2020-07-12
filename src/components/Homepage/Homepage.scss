@@ -44,7 +44,8 @@
     display: flex;
     flex-direction: column;
 
-    & > input {
+    & > input,
+    button {
       margin-bottom: 20px;
       height: auto;
       background: none;
@@ -52,7 +53,7 @@
       padding: 10px;
       border-radius: 5px;
     }
-    input[type='submit'] {
+    button {
       margin-top: 0px;
       // font-size: 15px;
       cursor: pointer;
@@ -62,6 +63,15 @@
         background: var(--color-dark);
         color: var(--color-light);
       }
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    .spinner {
+      display: flex;
+      justify-content: center;
     }
   }
 }
