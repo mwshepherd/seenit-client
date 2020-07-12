@@ -13,12 +13,17 @@ class Dashboard extends Component {
     countries: [],
     totalCountries: [],
     activeCountry: null,
+    selectedCountry: '',
   };
 
   async componentDidMount() {
     await this.getCountries();
     await this.getTotalCountries();
   }
+
+  setSelectedCountry = (country) => {
+    this.setState({ selectedCountry: country });
+  };
 
   getCountries = async () => {
     const response = await fetch(`${backendServer}/countries?type=json`, {
@@ -27,7 +32,7 @@ class Dashboard extends Component {
       },
     });
     const data = await response.json();
-    this.setState({ user: data.user, countries: data.data });
+    this.setState({ user: data.user, countries: data.data, selectedCountry: '' });
   };
 
   getTotalCountries = async () => {
@@ -85,6 +90,7 @@ class Dashboard extends Component {
   };
 
   render() {
+    console.log(this.state);
     const { activeCountry, activeCountryLatLng } = this.state;
     return (
       <>
@@ -129,7 +135,13 @@ class Dashboard extends Component {
               </Popup>
             )}
           </Map>
-          <CountriesList countries={this.state.totalCountries} userCountries={this.state.countries} createCountry={this.createCountry} />
+          <CountriesList
+            countries={this.state.totalCountries}
+            userCountries={this.state.countries}
+            createCountry={this.createCountry}
+            setSelectedCountry={this.setSelectedCountry}
+            selectedCountry={this.state.selectedCountry}
+          />
         </div>
       </>
     );

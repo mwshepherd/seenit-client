@@ -15,26 +15,35 @@ class CountriesList extends Component {
     this.setState({ search: event.target.value });
   };
 
+  handleOnClick = (country) => {
+    console.log('in the on click');
+    this.props.setSelectedCountry(country);
+
+    if (country === this.props.selectedCountry) {
+      console.log('Already selected');
+    } else {
+      this.props.createCountry(country);
+    }
+  };
+
   renderCountries = (countries, userCountries) => {
     return countries.map((country, index) => {
       this.match = userCountries.find(({ name }) => name === country.name);
 
       return (
-        <div key={index} className={this.match ? 'country-entry selected' : 'country-entry'} onClick={() => this.props.createCountry(country.name)}>
+        <div key={index} className={this.match ? 'country-entry selected' : 'country-entry'} onClick={() => this.handleOnClick(country.name)}>
           <div className="country-flag">
             <img src={country.flag} alt="flag lol" />
           </div>
 
           <h4>{country.name}</h4>
-          {/* {this.match ? <h4>Selected</h4> : null} */}
-          {/* <p>Native Name: {country.nativeName}</p> */}
-          {/* <p>Population: {country.population}</p> */}
         </div>
       );
     });
   };
 
   render() {
+    // console.log(this.state);
     let filteredCountries = this.props.countries.filter((country) => {
       return country.name.toLowerCase().indexOf(this.state.search.toLowerCase()) != -1;
     });
