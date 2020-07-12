@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import '../Homepage/Homepage.scss';
 import { backendServer } from '../../shared/constants';
+import Spinner from '../Spinner/Spinner';
 
 class Homepage extends Component {
-  state = { username: '', email: '', password: '', errMessage: '', login: true };
+  state = { username: '', email: '', password: '', errMessage: '', login: true, loading: false };
 
   showLogIn = () => {
     this.setState({ login: true });
@@ -22,6 +23,7 @@ class Homepage extends Component {
 
   handleUserSignUp = async (event) => {
     event.preventDefault();
+    this.setState({ loading: true });
     const { username, email, password } = this.state;
     const body = {
       user: { username, email, password },
@@ -45,12 +47,14 @@ class Homepage extends Component {
     } catch (err) {
       this.setState({
         errMessage: err.message,
+        loading: false,
       });
     }
   };
 
   onFormSubmit = async (event) => {
     event.preventDefault();
+    this.setState({ loading: true });
     const { email, password } = this.state;
     const body = {
       auth: { email, password },
@@ -73,6 +77,7 @@ class Homepage extends Component {
     } catch (err) {
       this.setState({
         errMessage: err.message,
+        loading: false,
       });
     }
   };
@@ -98,7 +103,8 @@ class Homepage extends Component {
             <form onSubmit={this.onFormSubmit}>
               <input type="email" name="email" id="email" value={email} placeholder="Email" onChange={this.onInputChange} />
               <input type="password" name="password" id="password" value={password} placeholder="Password" onChange={this.onInputChange} />
-              <input type="submit" value="Login" />
+              <button type="submit">{this.state.loading ? 'Loading...' : 'Login'}</button>
+              {this.state.loading && <Spinner />}
             </form>
           )}
 
@@ -107,7 +113,8 @@ class Homepage extends Component {
               <input type="text" name="username" id="username" value={username} placeholder="Username" onChange={this.onInputChange} />
               <input type="email" name="email" id="email" value={email} placeholder="Email" onChange={this.onInputChange} />
               <input type="password" name="password" id="password" value={password} placeholder="Password" onChange={this.onInputChange} />
-              <input type="submit" value="Signup" />
+              <button type="submit">{this.state.loading ? 'Loading...' : 'Signup'}</button>
+              {this.state.loading && <Spinner />}
             </form>
           )}
         </div>
